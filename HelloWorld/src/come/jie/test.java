@@ -46,7 +46,7 @@ public class test {
         try{
             sqlSession = sqlSessionFactory.openSession();
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-            Employee employee = mapper.getEmployee(2);
+            Employee employee = mapper.getEmployee(1);
             System.out.println(employee);
         }finally {
             sqlSession.close();
