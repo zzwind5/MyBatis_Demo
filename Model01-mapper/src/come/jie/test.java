@@ -26,15 +26,9 @@ public class test {
 
     @Test
     public void test11() {
-        SqlSession sqlSession = null;
-        try {
-            sqlSession = sqlSessionFactory.openSession();
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
             Employee employee = sqlSession.selectOne("com.jie.mybatis.bean.Employee.selectEmployee", 1);
             System.out.println(employee);
-        }finally {
-            if (sqlSession != null) {
-                sqlSession.close();
-            }
         }
 
         System.out.println("OK");
@@ -43,27 +37,37 @@ public class test {
 
     @Test
     public void test22(){
-        SqlSession sqlSession = null;
-        try{
-            sqlSession = sqlSessionFactory.openSession();
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()){
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
             Employee employee = mapper.getEmployee(3);
             System.out.println(employee);
-        }finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void test33() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try{
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()){
             EmployeeAnnotationMapper mapper = sqlSession.getMapper(EmployeeAnnotationMapper.class);
             Employee employee = mapper.getEmployee(2);
             System.out.println(employee);
-        }finally {
-            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void test04(){
+        try(SqlSession sqlSession = sqlSessionFactory.openSession();) {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+
+//            Employee jerry = new Employee(null, "Jerry", "1", "jerry@123.com");
+//            long num = mapper.addEmp(jerry);
+//            System.out.println(num);
+
+//            Employee upJerry = new Employee(3, "Jerry", "0", "jerry@163.com");
+//            mapper.updateEmp(upJerry);
+
+            long count = mapper.deleteEmp(3);
+            System.out.println(count);
+            sqlSession.commit();
         }
     }
 }
