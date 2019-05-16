@@ -12,6 +12,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class test {
 
@@ -39,7 +41,7 @@ public class test {
     public void test22(){
         try(SqlSession sqlSession = sqlSessionFactory.openSession()){
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-            Employee employee = mapper.getEmployee(3);
+            Employee employee = mapper.getEmployee(1);
             System.out.println(employee);
         }
     }
@@ -58,16 +60,37 @@ public class test {
         try(SqlSession sqlSession = sqlSessionFactory.openSession();) {
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
 
-//            Employee jerry = new Employee(null, "Jerry", "1", "jerry@123.com");
-//            long num = mapper.addEmp(jerry);
-//            System.out.println(num);
+            Employee jerry = new Employee(null, "Jerry", "1", "jerry@123.com");
+            long num = mapper.addEmp(jerry);
+            System.out.println(jerry);
 
 //            Employee upJerry = new Employee(3, "Jerry", "0", "jerry@163.com");
 //            mapper.updateEmp(upJerry);
 
-            long count = mapper.deleteEmp(3);
-            System.out.println(count);
+//            long count = mapper.deleteEmp(3);
+//            System.out.println(count);
             sqlSession.commit();
+        }
+    }
+
+    @Test
+    public void test05(){
+        try( SqlSession sqlSession = sqlSessionFactory.openSession() ){
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Employee tom = mapper.getEmployeeByIdAndLastName(1, "Tom");
+            System.out.println(tom);
+        }
+    }
+
+    @Test
+    public void test06(){
+        try( SqlSession sqlSession = sqlSessionFactory.openSession() ){
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", 1);
+            map.put("lastName", "Tom");
+            Employee tom = mapper.getEmployeeByMap(map);
+            System.out.println(tom);
         }
     }
 }
