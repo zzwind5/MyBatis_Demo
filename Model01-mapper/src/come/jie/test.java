@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class test {
@@ -86,11 +86,39 @@ public class test {
     public void test06(){
         try( SqlSession sqlSession = sqlSessionFactory.openSession() ){
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-            Map<String, Object> map = new HashMap<>();
-            map.put("id", 1);
-            map.put("lastName", "Tom");
-            Employee tom = mapper.getEmployeeByMap(map);
+            Employee tom = mapper.getEmployeeByMap(Map.of("id", 1, "lastName", "Tom", "tableName", "tbl_employee"));
             System.out.println(tom);
+        }
+    }
+
+    @Test
+    public void test07(){
+        try( SqlSession sqlSession = sqlSessionFactory.openSession() ){
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            List<Employee> allEmployees = mapper.getAllEmployees();
+            for (Employee allEmployee : allEmployees) {
+                System.out.println(allEmployee);
+            }
+        }
+    }
+
+    @Test
+    public void test08(){
+        try( SqlSession sqlSession = sqlSessionFactory.openSession() ){
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Map map = mapper.getEmployeeByIdReturnMap(1);
+            System.out.println(map);
+            System.out.println(map.keySet());
+            System.out.println(map.values());
+        }
+    }
+
+    @Test
+    public void test09(){
+        try( SqlSession sqlSession = sqlSessionFactory.openSession() ){
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Map<Integer, Employee> allEmployeeMap = mapper.getAllEmployeeMap();
+            System.out.println(allEmployeeMap);
         }
     }
 }

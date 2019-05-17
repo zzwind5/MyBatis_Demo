@@ -8,6 +8,7 @@
     
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="useActualParamName" value="false"/>
     </settings>
 
     <typeAliases>

@@ -1,17 +1,25 @@
 package com.jie.mybatis.dao;
 
 import com.jie.mybatis.bean.Employee;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.MapKey;
 
+import java.util.List;
 import java.util.Map;
 
 public interface EmployeeMapper {
 
     Employee getEmployee(Integer id);
 
-    Employee getEmployeeByIdAndLastName(@Param("id")Integer id, @Param("lastName")String lastName);
+    Employee getEmployeeByIdAndLastName(Integer id, String lastName);
 
     Employee getEmployeeByMap(Map params);
+
+    List<Employee> getAllEmployees();
+
+    Map<String, Object> getEmployeeByIdReturnMap(Integer id);
+
+    @MapKey("lastName")
+    Map<Integer, Employee> getAllEmployeeMap();
 
     long addEmp(Employee emp);
 

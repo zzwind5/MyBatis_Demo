@@ -27,7 +27,19 @@
     </select>
 
     <select id="getEmployeeByMap" resultType="com.jie.mybatis.bean.Employee">
-        select * from tbl_employee where id = #{id} and last_name = #{lastName}
+        select * from tbl_employee where id = ${id} and last_name = #{lastName}
+    </select>
+
+    <select id="getAllEmployees" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee
+    </select>
+
+    <select id="getEmployeeByIdReturnMap" resultType="map">
+        select * from tbl_employee where id = #{id}
+    </select>
+
+    <select id="getAllEmployeeMap" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee
     </select>
 
     <update id="updateEmp">
