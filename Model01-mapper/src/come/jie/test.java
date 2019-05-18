@@ -1,6 +1,8 @@
 package come.jie;
 
+import com.jie.mybatis.bean.Department;
 import com.jie.mybatis.bean.Employee;
+import com.jie.mybatis.dao.DepartmentMapper;
 import com.jie.mybatis.dao.EmployeeAnnotationMapper;
 import com.jie.mybatis.dao.EmployeeMapper;
 import com.jie.mybatis.dao.EmployeeMapperPlus;
@@ -141,6 +143,45 @@ public class test {
             Employee emp = mapper.getEmployeeAndDeptById(4);
             System.out.println(emp);
             System.out.println(emp.getDepartment());
+        }
+    }
+
+    @Test
+    public void test13(){
+
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+            EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
+            Employee employee = mapper.getEmployeeByIdStep(4);
+            System.out.println(employee.getLastName());
+            System.out.println(employee.getDepartment().getId());
+        }
+    }
+
+    @Test
+    public void test14(){
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+            DepartmentMapper mapper = sqlSession.getMapper(DepartmentMapper.class);
+            Department dept = mapper.getDepartmentByIdPlus(1);
+            System.out.println(dept);
+        }
+    }
+
+    @Test
+    public void test15(){
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+            DepartmentMapper mapper = sqlSession.getMapper(DepartmentMapper.class);
+            Department department = mapper.getDepartmentByIdStep(1);
+            System.out.println(department.getDeptName());
+            System.out.println(department.getEmployees());
+        }
+    }
+
+    @Test
+    public void test16(){
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+            EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
+            Employee employee = mapper.getEmployeeByIdDiscrim(4);
+            System.out.println(employee);
         }
     }
 }

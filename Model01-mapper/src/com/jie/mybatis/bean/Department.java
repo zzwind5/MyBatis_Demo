@@ -1,9 +1,12 @@
 package com.jie.mybatis.bean;
 
+import java.util.List;
+
 public class Department {
 
     private Integer id;
     private String deptName;
+    private List<Employee> employees;
 
     public Integer getId() {
         return id;
@@ -21,11 +24,20 @@ public class Department {
         this.deptName = deptName;
     }
 
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
     @Override
     public String toString() {
         return "Department{" +
                 "id=" + id +
                 ", deptName='" + deptName + '\'' +
+                ", employees=" + employees +
                 '}';
     }
 }

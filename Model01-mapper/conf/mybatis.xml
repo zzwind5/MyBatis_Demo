@@ -9,6 +9,8 @@
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <setting name="useActualParamName" value="false"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
     </settings>
 
     <typeAliases>
