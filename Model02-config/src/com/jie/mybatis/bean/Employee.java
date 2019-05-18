@@ -2,14 +2,13 @@ package com.jie.mybatis.bean;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("emp")
+@Alias("employee")
 public class Employee {
 
     private Integer id;
     private String lastName;
     private String gender;
     private String email;
-    private Department department;
 
 
     public Employee() {
@@ -54,13 +53,6 @@ public class Employee {
         this.email = email;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
 
     @Override
     public String toString() {
@@ -69,7 +61,6 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 ", gender='" + gender + '\'' +
                 ", email='" + email + '\'' +
-                ", department=" + department +
                 '}';
     }
 }

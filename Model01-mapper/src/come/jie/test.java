@@ -3,6 +3,7 @@ package come.jie;
 import com.jie.mybatis.bean.Employee;
 import com.jie.mybatis.dao.EmployeeAnnotationMapper;
 import com.jie.mybatis.dao.EmployeeMapper;
+import com.jie.mybatis.dao.EmployeeMapperPlus;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -82,14 +83,14 @@ public class test {
         }
     }
 
-    @Test
-    public void test06(){
-        try( SqlSession sqlSession = sqlSessionFactory.openSession() ){
-            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-            Employee tom = mapper.getEmployeeByMap(Map.of("id", 1, "lastName", "Tom", "tableName", "tbl_employee"));
-            System.out.println(tom);
-        }
-    }
+//    @Test
+//    public void test06(){
+//        try( SqlSession sqlSession = sqlSessionFactory.openSession() ){
+//            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+//            Employee tom = mapper.getEmployeeByMap(Map.of("id", 1, "lastName", "Tom", "tableName", "tbl_employee"));
+//            System.out.println(tom);
+//        }
+//    }
 
     @Test
     public void test07(){
@@ -119,6 +120,27 @@ public class test {
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
             Map<Integer, Employee> allEmployeeMap = mapper.getAllEmployeeMap();
             System.out.println(allEmployeeMap);
+        }
+    }
+
+    @Test
+    public void test10(){
+
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+            EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
+            Employee emp = mapper.getEmployeeById(2);
+            System.out.println(emp);
+        }
+    }
+
+    @Test
+    public void test12(){
+
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+            EmployeeMapperPlus mapper = sqlSession.getMapper(EmployeeMapperPlus.class);
+            Employee emp = mapper.getEmployeeAndDeptById(4);
+            System.out.println(emp);
+            System.out.println(emp.getDepartment());
         }
     }
 }

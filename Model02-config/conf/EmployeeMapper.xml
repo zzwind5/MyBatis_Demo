@@ -4,7 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jie.mybatis.dao.EmployeeMapper">
-    <select id="getEmployee" resultType="com.jie.mybatis.bean.Employee">
-      select id, last_name lastName, gender, email from tbl_employee where id = #{id}
+
+    <select id="getEmployeeById" resultType="employee">
+        select * from tbl_employee where id=#{id}
     </select>
 </mapper>
