@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jie.mybatis.dao.EmployeeMapper">
+
+    <select id="getEmployee" resultType="com.jie.mybatis.bean.Employee">
+      select id, email, last_name from tbl_employee where id = #{id12121}
+    </select>
+
+    <!--parameterType 是可以省略的-->
+    <insert id="addEmp" parameterType="com.jie.mybatis.bean.Employee"
+        useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_employee(last_name, email, gender) values (#{lastName}, #{email}, #{gender})
+    </insert>
+
+    <!--<insert id="addEmp" databaseId="oracle">
+        <selectKey keyProperty="id" resultType="Integer" order="BEFORE">
+            select EMPLOYEES_SEQ.nextval from dual
+        </selectKey>
+        insert into tbl_employee(id, last_name, email, gender) values (#{id}, #{lastName}, #{email}, #{gender})
+    </insert>-->
+
+    <select id="getEmployeeByIdAndLastName" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee where id = #{id} and last_name = #{lastName}
+    </select>
+
+    <select id="getEmployeeByMap" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee where id = ${id} and last_name = #{lastName}
+    </select>
+
+    <select id="getAllEmployees" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee
+    </select>
+
+    <select id="getEmployeeByIdReturnMap" resultType="map">
+        select * from tbl_employee where id = #{id}
+    </select>
+
+    <select id="getAllEmployeeMap" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee
+    </select>
+
+    <update id="updateEmp">
+        update tbl_employee
+        set last_name=#{lastName}, email=#{email}, gender=#{gender}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteEmp">
+        delete from tbl_employee where id=#{id}
+    </delete>
+
+</mapper>
