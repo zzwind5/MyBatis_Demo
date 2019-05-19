@@ -5,6 +5,9 @@
 
 <mapper namespace="com.jie.mybatis.dao.EmployeeMapper">
 
+    <!--<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
+    <cache type="org.mybatis.caches.redis.RedisCache"/>
+
     <select id="getEmployee" resultType="com.jie.mybatis.bean.Employee">
       select id, email, last_name from tbl_employee where id = #{id12121}
     </select>
