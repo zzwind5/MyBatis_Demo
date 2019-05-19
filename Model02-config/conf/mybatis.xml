@@ -16,7 +16,6 @@
     </typeAliases>
 
     <environments default="mysql">
-
         <environment id="mysql">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
@@ -28,7 +27,17 @@
         </environment>
     </environments>
 
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="MySQL" value="mysql"/>
+        <property name="Oracle" value="oracle"/>
+    </databaseIdProvider>
+
     <mappers>
-        <mapper resource="EmployeeMapper.xml"/>
+        <!--<mapper resource="com/jie/mybatis/dao/EmployeeMapper.xml"/>-->
+       <!-- <mapper class="com.jie.mybatis.dao.EmployeeMapper"/>-->
+
+        <!--<mapper class="com.jie.mybatis.dao.EmployeeAnnotationMapper"/>-->
+
+        <package name="com.jie.mybatis.dao"/>
     </mappers>
 </configuration>

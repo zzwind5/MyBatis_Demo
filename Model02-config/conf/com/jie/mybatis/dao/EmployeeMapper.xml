@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jie.mybatis.dao.EmployeeMapper">
+
+    <select id="getEmployeeById" resultType="employee" databaseId="mysql">
+        select * from tbl_employee where id=#{id}
+    </select>
+
+    <insert id="addEmpoloyee" useGeneratedKeys="true" keyProperty="id" databaseId="mysql">
+        insert into tbl_employee(last_name, email, gender) values (#{lastName}, #{email}, #{gender})
+    </insert>
+    <insert id="addEmpoloyee" databaseId="oracle">
+        <selectKey keyProperty="id" resultType="Integer" order="BEFORE">
+            select EMPLOYEES_SEQ.nextval from dual
+        </selectKey>
+        insert into tbl_employee (last_name, email, gender) values (#{lastName}, #{email}, #{gender})
+    </insert>
+
+    <update id="updateEmployee">
+        update tbl_employee
+          set last_name=#{lastName}, email=#{email}, gender=#{gender}
+          where id=#{id}
+    </update>
+
+    <delete id="deleteEmployee">
+        delete from tbl_employee where id=#{id}
+    </delete>
+
+    <select id="getEmployeeByIdAndLastName" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee where id=#{id} and last_name=#{lastName}
+    </select>
+
+    <select id="getEmployeeByFistId" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee where id=#{list[0]}
+    </select>
+
+    <select id="getEmployeeByFistIdArray" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee where id=#{array[0]}
+    </select>
+</mapper>
