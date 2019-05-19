@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jie.mybatis.dao.EmployeeMapperDynamic">
+    <select id="getEmployeesByConditionIf" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+            <if test="lastName != null and lastName !='' ">
+                and last_name like #{lastName}
+            </if>
+            /*ognl会进行字符串与数字的转换判断 "0"==0*/
+            <if test="gender==0 or gender==1 ">
+                and gender=#{gender}
+            </if>
+            <if test="email != null and email.trim() != '' ">
+                and email=#{email}
+            </if>
+        </where>
+    </select>
+
+
+    <!--
+        后面多出的and 或者 or 是where 标签不能解决的
+        prefix：             给拼串后的整个字符串加一个前缀
+        prefixOverrides：    去掉整个字符串前面多余的字符串
+        suffix：             给拼串后的整个字符串加一个后缀
+        suffixOverrides：    去掉整个字符串后面面多余的字符串
+    -->
+    <select id="getEmployeesByConditionTrim" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee
+        <trim prefix="where" suffixOverrides="and|or">
+            <if test="id != null">
+                id=#{id} and
+            </if>
+            <if test="lastName != null and lastName !='' ">
+                last_name like #{lastName} and
+            </if>
+            <if test="gender==0 or gender==1 ">
+                gender=#{gender} and
+            </if>
+            <if test="email != null and email.trim() != '' ">
+                email=#{email}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getEmployeeByConditionChoose" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee
+        <where>
+            <choose>
+                <when test="id != null">
+                  id=#{id}
+                </when>
+                <when test="lastName != null and lastName !=''">
+                  last_name like #{lastName}
+                </when>
+                <when test="email != null and email !=''">
+                    email=#{email}
+                </when>
+                <otherwise>
+                    1=1
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <update id="updateEmployee">
+        update tbl_employee
+        <set>
+            <if test="lastName != null">
+                last_name=#{lastName},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <select id="getEmployeeByConditionForeach" resultType="com.jie.mybatis.bean.Employee">
+        select * from tbl_employee where id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+          #{id}
+        </foreach>
+    </select>
+
+    <sql id="insertColumns">
+        <if test="_databaseId=='mysql'">
+            last_name, email, gender, dept_id
+        </if>
+    </sql>
+
+    <!--这种方式需要数据库连接属性 allowMultiQueries=true, 也可以用于其他批量操作（删除，修改）-->
+    <!--jdbc:mysql://10.155.100.17:3306/mybatis?allowMultiQueries=true -->
+    <!--<insert id="addEmployees">
+        <foreach collection="emps" item="emp" separator=";">
+            insert into tbl_employee(last_name, email, gender, dept_id) values
+            (#{emp.lastName}, #{emp.email}, #{emp.gender}, #{emp.department.id})
+        </foreach>
+    </insert>-->
+
+    <insert id="addEmployees">
+        insert into tbl_employee(
+        <include refid="insertColumns">
+        </include>
+        )
+        values
+        <foreach collection="emps" item="emp" separator=",">
+            (#{emp.lastName}, #{emp.email}, #{emp.gender}, #{emp.department.id})
+        </foreach>
+    </insert>
+</mapper>
