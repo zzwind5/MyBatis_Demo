@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MybatisTest {
 
@@ -75,24 +76,40 @@ public class MybatisTest {
     public void test04(){
         try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
             EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
-//            HashMap<String, Object> params = new HashMap<>();
-//            params.put("id", 1);
-//            params.put("lastName", "Tom");
-//            Employee tom = mapper.getEmployeeByIdAndLastName(1, "Tom");
-//            mapper.getEmployeeByIdAndLastName()
-//            System.out.println(tom);
-
-
-//            Employee emp = mapper.getEmployeeByFistId(Arrays.asList(1, 2, 3));
-//            System.out.println(emp);
-
-//            Employee emp1 = mapper.getEmployeeByFistIdArray(new Integer[]{1, 2, 3});
-//            System.out.println(emp1);
-
-            List<Employee> emps = mapper.getEmployeesIdIn(Arrays.asList(1, 2, 4));
-            System.out.println(emps);
+            List<Employee> employees = mapper.getEmployees();
+            for (Employee employee : employees) {
+                System.out.println(employee);
+            }
         }
     }
 
+    @Test
+    public void test05(){
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Map<String, Object> employeeMap = mapper.getEmployeeMap(1);
+            System.out.println(employeeMap);
+        }
+    }
 
+    @Test
+    public void test06(){
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Map<String, Employee> employeeMaps = mapper.getEmployeeMaps();
+            for (Map.Entry<String, Employee> integerEmployeeEntry : employeeMaps.entrySet()) {
+                System.out.println(integerEmployeeEntry);
+            }
+
+        }
+    }
+
+    @Test
+    public void test07() {
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+            Employee employee = mapper.getEmployeeAndDepartmentById(1);
+            System.out.println(employee);
+        }
+    }
 }

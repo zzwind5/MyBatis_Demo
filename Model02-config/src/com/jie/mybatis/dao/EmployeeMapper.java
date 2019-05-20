@@ -1,9 +1,11 @@
 package com.jie.mybatis.dao;
 
 import com.jie.mybatis.bean.Employee;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EmployeeMapper {
 
@@ -22,4 +24,13 @@ public interface EmployeeMapper {
     Employee getEmployeeByFistIdArray(Integer[] ids);
 
     List<Employee> getEmployeesIdIn(List<Integer> ids);
+
+    List<Employee> getEmployees();
+
+    Map<String, Object> getEmployeeMap(Integer id);
+
+    @MapKey("lastName")
+    Map<String, Employee> getEmployeeMaps();
+
+    Employee getEmployeeAndDepartmentById(Integer id);
 }
