@@ -33,4 +33,10 @@ public interface EmployeeMapper {
     Map<String, Employee> getEmployeeMaps();
 
     Employee getEmployeeAndDepartmentById(Integer id);
+
+    Employee getEmployeeByIdStep(Integer id);
+
+    List<Employee> getEmployeeByDeptId(Integer deptId);
+
+    Employee getEmployeeByIdDis(Integer id);
 }
